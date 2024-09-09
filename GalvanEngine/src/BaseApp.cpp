@@ -1,11 +1,13 @@
 ﻿#include "BaseApp.h"
 
-int BaseApp::run()
+int
+BaseApp::run()
 {
     initialize();
-    while (window->isOpen())
+
+    while (m_window->isOpen())
     {
-        handleEvents();
+        m_window->handleEvents();
         update();
         render();
     }
@@ -16,39 +18,38 @@ int BaseApp::run()
 }
 
 // Funcion de inicializacion
-void BaseApp::initialize()
+void
+BaseApp::initialize()
 {
-    window = new sf::RenderWindow(sf::VideoMode(800, 800), "Galvan Engine");
-    shape = new sf::CircleShape(100.0f);
-    shape->setFillColor(sf::Color::Green);
-}
+    // Init window
+    m_window = new Window(800, 600, "Mi ventana SFML");
 
-// Funcion de manejo de datos
-void BaseApp::handleEvents()
-{
-    sf::Event event;
-    while (window->pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)
-            window->close();
-    }
+    // Init Objects
+    shape2 = new sf::CircleShape(300, 300);
+    shape2->setFillColor(sf::Color::Cyan);
+    shape2->setOutlineThickness(20);
+    shape2->setOutlineColor(sf::Color::Red);
 }
 
 // Funcion que se actualiza por frame
-void BaseApp::update()
+void
+BaseApp::update()
 {
 }
 
 // Funcion de renderizado
-void BaseApp::render()
+void
+BaseApp::render()
 {
-    window->clear();
-    window->draw(*shape);
-    window->display();
+    m_window->clear();
+    m_window->draw(*shape);
+    m_window->display();
 }
 
-void BaseApp::cleanup()
+void
+BaseApp::cleanup()
 {
-    delete window;
+    m_window->destroy();
+    delete m_window;
     delete shape;
 }

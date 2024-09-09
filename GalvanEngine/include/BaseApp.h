@@ -1,32 +1,38 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 
+#include "Window.h"
 
-class BaseApp
+class
+    BaseApp
 {
 public:
     BaseApp() = default;
     ~BaseApp() = default;
 
-    // Funcion encargada de ejecutar la apliacion en main
-    int run();
+    // Funcion que corre el programa en main
+    int
+    run();
 
     // Funcion de inicializacion
-    void initialize();
-
-    // Funcion de manejo de datos
-    void handleEvents();
+    void
+    initialize();
 
     // Funcion que se actualiza por frame
-    void update();
+    void
+    update();
 
     // Funcion de renderizado
-    void render();
+    void
+    render();
 
-    // Funcion para liberacion de recursos
-    void cleanup();
+    //Funcion de liberacion de memoria
+    void
+    cleanup();
 
 private:
-    sf::RenderWindow* window;
-    sf::CircleShape* shape;
+    Window* m_window;
+    //Variables Globales
+    sf::RectangleShape* shape;
+    sf::CircleShape* shape2;
 };
