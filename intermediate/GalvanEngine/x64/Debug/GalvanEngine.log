@@ -1,2 +1,1 @@
-﻿  GalvanEngine.cpp
-LINK : fatal error LNK1104: no se puede abrir el archivo 'sfml-graphics-d.lib'
+﻿  GalvanEngine.vcxproj -> D:\Git\C++\GalvanEngine\bin\x64\GalvanEngine_d.exe
