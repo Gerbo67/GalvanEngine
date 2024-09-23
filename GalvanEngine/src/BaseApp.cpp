@@ -3,8 +3,11 @@
 int
 BaseApp::run()
 {
+    if (!initialize())
+    {
+        ERROR("BaseApp", "run", "Initialize result on a false statement, check method validations");
+    }
     initialize();
-
     while (m_window->isOpen())
     {
         m_window->handleEvents();
@@ -13,22 +16,38 @@ BaseApp::run()
     }
 
     cleanup();
-
     return 0;
 }
 
 // Funcion de inicializacion
-void
+bool
 BaseApp::initialize()
 {
-    // Init window
-    m_window = new Window(800, 600, "Mi ventana SFML");
+    m_window = new Window(800, 600, "Galvan Engine");
+    if (!m_window)
+    {
+        ERROR("BaseApp", "initialize", "Error on window creation, var is null");
+        return false;
+    }
+    shape = new sf::CircleShape(10.0f);
 
-    // Init Objects
-    shape2 = new sf::CircleShape(300, 300);
-    shape2->setFillColor(sf::Color::Cyan);
-    shape2->setOutlineThickness(20);
-    shape2->setOutlineColor(sf::Color::Red);
+    if (!shape)
+    {
+        ERROR("BaseApp", "initialize", "Error on shape creation, var is null");
+        return false;
+    }
+
+    shape->setFillColor(sf::Color::Blue);
+    shape->setPosition(200.0f, 200.0f);
+
+    // Triangulo = m_shapeFactory.createShape(ShapeType::TRIANGLE);
+    // if (!Triangulo)
+    // {
+    //     ERROR("BaseApp", "initialize", "Error on triangulo creation, var is null");
+    //     return false;
+    // }
+
+    return true;
 }
 
 // Funcion que se actualiza por frame
@@ -43,6 +62,7 @@ BaseApp::render()
 {
     m_window->clear();
     m_window->draw(*shape);
+    // m_window->draw(*Triangulo);
     m_window->display();
 }
 
@@ -52,4 +72,5 @@ BaseApp::cleanup()
     m_window->destroy();
     delete m_window;
     delete shape;
+    // delete Triangulo;
 }

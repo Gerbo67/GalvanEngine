@@ -3,9 +3,10 @@
 Window::Window(int width, int height, const std::string& title)
 {
     m_window = new sf::RenderWindow(sf::VideoMode(width, height), title);
+
     if (!m_window)
     {
-        ERROR("Window", "Window", "CHECK FOR CREATION METHOD");
+        ERROR("Window", "Window", "CHECK CONSTRUCTOR");
     }
     else
     {
@@ -15,7 +16,6 @@ Window::Window(int width, int height, const std::string& title)
 
 Window::~Window()
 {
-    //SAFE_PTR_RELEASE(m_window);
     delete m_window;
 }
 
@@ -26,9 +26,7 @@ Window::handleEvents()
     while (m_window->pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
-        {
             m_window->close();
-        }
     }
 }
 
@@ -77,7 +75,7 @@ Window::draw(const sf::Drawable& drawable)
 {
     if (m_window != nullptr)
     {
-        return m_window->draw(drawable);
+        m_window->draw(drawable);
     }
     else
     {

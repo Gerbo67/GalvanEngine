@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include <SFML/Graphics.hpp>
-
+#include "Prerequisites.h"
 #include "Window.h"
+#include "ShapeFactory.h"
 
 class
-    BaseApp
+BaseApp
 {
 public:
     BaseApp() = default;
@@ -15,7 +15,7 @@ public:
     run();
 
     // Funcion de inicializacion
-    void
+    bool
     initialize();
 
     // Funcion que se actualiza por frame
@@ -26,13 +26,14 @@ public:
     void
     render();
 
-    //Funcion de liberacion de memoria
+    // Funcion de liberacion de memoria
     void
     cleanup();
 
 private:
-    Window* m_window;
-    //Variables Globales
-    sf::RectangleShape* shape;
-    sf::CircleShape* shape2;
+    // Variables Globales
+    Window * m_window;
+    sf::CircleShape* shape;
+    // ShapeFactory m_shapeFactory;
+    // sf::Shape* Triangulo;
 };
