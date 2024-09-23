@@ -40,13 +40,19 @@ BaseApp::initialize()
     shape->setFillColor(sf::Color::Blue);
     shape->setPosition(200.0f, 200.0f);
 
+    Triangle = EngineUtilities::MakeShared<Actor>("Triangle");
+    if (!Triangle.isNull())
+    {
+        Triangle->getComponent<ShapeFactory>()->createShape(ShapeType::TRIANGLE);
+    }
+
     // Triangulo = m_shapeFactory.createShape(ShapeType::TRIANGLE);
     // if (!Triangulo)
     // {
     //     ERROR("BaseApp", "initialize", "Error on triangulo creation, var is null");
     //     return false;
     // }
-
+    
     return true;
 }
 
@@ -62,6 +68,10 @@ BaseApp::render()
 {
     m_window->clear();
     m_window->draw(*shape);
+    if(!Triangle.isNull())
+    {
+        m_window->draw(*Triangle->getComponent<ShapeFactory>()->m_shape);
+    }
     // m_window->draw(*Triangulo);
     m_window->display();
 }

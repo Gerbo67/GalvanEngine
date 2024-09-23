@@ -15,3 +15,15 @@ Actor::Actor(std::string actorName)
 
     // Setup Sprite
 }
+
+void Actor::update(float deltaTime)
+{
+    
+}
+
+void Actor::render(Window window)
+{
+    
+}
+
+

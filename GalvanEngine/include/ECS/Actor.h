@@ -56,17 +56,15 @@ private:
  * utilizando el tipo de componente especificado como argumento de la plantilla.
  * Si el componente no se encuentre, la función devuelve nullptr.
  */
-template <typename T>
+template<typename T>
 inline EngineUtilities::TSharedPointer<T>
-Actor::getComponent()
-{
-    for (auto& component : components)
-    {
-        EngineUtilities::TSharedPointer<T> specificComponent = std::dynamic_pointer_cast<T>(component);
-        if (specificComponent)
-        {
+Actor::getComponent() {
+    for (auto& component : components) {
+        EngineUtilities::TSharedPointer<T> specificComponent = component.template dynamic_pointer_cast<T>();
+        if (specificComponent) {
             return specificComponent;
         }
     }
-    return nullptr;
+    // Devuelve un TSharedPointer vacío si no se encuentra el componente
+    return EngineUtilities::TSharedPointer<T>();
 }

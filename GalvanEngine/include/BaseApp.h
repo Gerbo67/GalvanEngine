@@ -2,6 +2,7 @@
 #include "Prerequisites.h"
 #include "Window.h"
 #include "ShapeFactory.h"
+#include "ECS/Actor.h"
 
 class
 BaseApp
@@ -34,6 +35,7 @@ private:
     // Variables Globales
     Window * m_window;
     sf::CircleShape* shape;
+    EngineUtilities::TSharedPointer<Actor> Triangle;
     // ShapeFactory m_shapeFactory;
     // sf::Shape* Triangulo;
 };

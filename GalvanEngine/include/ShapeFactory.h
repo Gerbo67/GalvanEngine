@@ -32,7 +32,7 @@ public:
     void
     render(Window window) override {}
 
-private:
     sf::Shape* m_shape;
+private:
     ShapeType m_shapeType;
 };
