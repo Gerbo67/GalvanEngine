@@ -27,7 +27,7 @@ public:
      * @param window Contexto del dispositivo para operaciones gráficas.
      */
     virtual void
-    render(Window window) = 0;
+    render(Window& window) = 0;
 
     /*
      * @brief Agrega un componente a la entidad.

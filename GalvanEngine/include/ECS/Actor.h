@@ -30,7 +30,7 @@ public:
      * @param window Contexto del dispositivo para operaciones gráficas.
      */
     void
-    render(Window window) override;
+    render(Window& window) override;
 
     /*
      * @brief Destruye el actor y libera los recursos asociados.

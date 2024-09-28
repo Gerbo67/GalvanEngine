@@ -32,10 +32,10 @@ public:
     cleanup();
 
 private:
-    // Variables Globales
+    sf::Clock clock;
+    sf::Time deltaTime;
+    
     Window * m_window;
-    sf::CircleShape* shape;
     EngineUtilities::TSharedPointer<Actor> Triangle;
-    // ShapeFactory m_shapeFactory;
-    // sf::Shape* Triangulo;
+    EngineUtilities::TSharedPointer<Actor> Circle;
 };

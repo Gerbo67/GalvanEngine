@@ -11,6 +11,7 @@ BaseApp::run()
     while (m_window->isOpen())
     {
         m_window->handleEvents();
+        deltaTime = clock.restart();
         update();
         render();
     }
@@ -29,30 +30,24 @@ BaseApp::initialize()
         ERROR("BaseApp", "initialize", "Error on window creation, var is null");
         return false;
     }
-    shape = new sf::CircleShape(10.0f);
 
-    if (!shape)
+    // Circle Actor
+    Circle = EngineUtilities::MakeShared<Actor>("Circle");
+    if (!Circle.isNull())
     {
-        ERROR("BaseApp", "initialize", "Error on shape creation, var is null");
-        return false;
+        Circle->getComponent<ShapeFactory>()->createShape(ShapeType::CIRCLE);
+        Circle->getComponent<ShapeFactory>()->setPosition(200.0f, 200.0f);
+        Circle->getComponent<ShapeFactory>()->setFillColor(sf::Color::Blue);
     }
 
-    shape->setFillColor(sf::Color::Blue);
-    shape->setPosition(200.0f, 200.0f);
-
+    // Triangle Actor
     Triangle = EngineUtilities::MakeShared<Actor>("Triangle");
     if (!Triangle.isNull())
     {
         Triangle->getComponent<ShapeFactory>()->createShape(ShapeType::TRIANGLE);
+        //Triangle->getComponent<ShapeFactory>()->getShape()->setFillColor(sf::Color::Blue);
     }
 
-    // Triangulo = m_shapeFactory.createShape(ShapeType::TRIANGLE);
-    // if (!Triangulo)
-    // {
-    //     ERROR("BaseApp", "initialize", "Error on triangulo creation, var is null");
-    //     return false;
-    // }
-    
     return true;
 }
 
@@ -60,6 +55,18 @@ BaseApp::initialize()
 void
 BaseApp::update()
 {
+    // Mouse Position
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window->getWindow());
+    sf::Vector2f mousePosF(static_cast<float>(mousePosition.x),
+                           static_cast<float>(mousePosition.y));
+
+    if (!Circle.isNull())
+    {
+        Circle->getComponent<ShapeFactory>()->Seek(mousePosF,
+                                                   200.0f,
+                                                   deltaTime.asSeconds(),
+                                                   50.0f);
+    }
 }
 
 // Funcion de renderizado
@@ -67,12 +74,12 @@ void
 BaseApp::render()
 {
     m_window->clear();
-    m_window->draw(*shape);
-    if(!Triangle.isNull())
-    {
-        m_window->draw(*Triangle->getComponent<ShapeFactory>()->m_shape);
-    }
-    // m_window->draw(*Triangulo);
+    Triangle->render(*m_window);
+    Circle->render(*m_window);
+    // if(!Triangle.isNull())
+    // {
+    //     m_window->draw(*Triangle->getComponent<ShapeFactory>()->getShape());
+    // }
     m_window->display();
 }
 
@@ -81,6 +88,5 @@ BaseApp::cleanup()
 {
     m_window->destroy();
     delete m_window;
-    delete shape;
     // delete Triangulo;
 }
