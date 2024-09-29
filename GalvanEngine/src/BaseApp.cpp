@@ -46,6 +46,15 @@ BaseApp::initialize()
     {
         Triangle->getComponent<ShapeFactory>()->createShape(ShapeType::TRIANGLE);
         //Triangle->getComponent<ShapeFactory>()->getShape()->setFillColor(sf::Color::Blue);
+
+        // NUEVO CODIGO DE PRACTICA
+        Triangle->getComponent<ShapeFactory>()->setPosition(100.0f, 100.0f);
+        m_trianglePoints.push_back(sf::Vector2f(100.0f, 100.0f));
+        m_trianglePoints.push_back(sf::Vector2f(700.0f, 100.0f));
+        m_trianglePoints.push_back(sf::Vector2f(700.0f, 500.0f));
+        m_trianglePoints.push_back(sf::Vector2f(100.0f, 500.0f));
+        m_currentTargetIndex = 0;
+        m_speed = 200.0f;
     }
 
     return true;
@@ -66,6 +75,13 @@ BaseApp::update()
                                                    200.0f,
                                                    deltaTime.asSeconds(),
                                                    50.0f);
+    }
+
+    // NUEVO CODIGO DE PRACTICA
+    if (!Triangle.isNull())
+    {
+        Triangle->getComponent<ShapeFactory>()->MoveTriangle(m_trianglePoints, m_currentTargetIndex, m_speed,
+                                                             deltaTime.asSeconds());
     }
 }
 

@@ -77,3 +77,31 @@ ShapeFactory::Seek(const sf::Vector2f& targetPosition,
         m_shape->move(direction * speed * deltaTime);
     }
 }
+
+// NUEVO CODIGO DE PRACTICA
+void ShapeFactory::MoveTriangle(const std::vector<sf::Vector2f>& points, int& targetIndex, float speed, float deltaTime)
+{
+    // Obtener la posición actual del triángulo
+    sf::Vector2f currentPos = m_shape->getPosition();
+    
+    // Obtener el objetivo actual
+    sf::Vector2f targetPos = points[targetIndex];
+    
+    // Calcular la dirección desde la posición actual hacia el objetivo
+    sf::Vector2f direction = targetPos - currentPos;
+    
+    // Calcular la distancia al objetivo
+    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+
+    // Si la distancia es mayor que una pequeña distancia
+    if (length > 10.0f)
+    {
+        direction /= length;
+        m_shape->move(direction * speed * deltaTime);
+    }
+    else
+    {
+        // Cambiar al siguiente objetivo en la secuencia
+        targetIndex = (targetIndex + 1) % points.size();
+    }
+}

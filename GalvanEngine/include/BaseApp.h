@@ -5,7 +5,7 @@
 #include "ECS/Actor.h"
 
 class
-BaseApp
+    BaseApp
 {
 public:
     BaseApp() = default;
@@ -34,8 +34,13 @@ public:
 private:
     sf::Clock clock;
     sf::Time deltaTime;
-    
-    Window * m_window;
+
+    Window* m_window;
     EngineUtilities::TSharedPointer<Actor> Triangle;
     EngineUtilities::TSharedPointer<Actor> Circle;
+
+    // NUEVO CODIGO DE PRACTICA
+    std::vector<sf::Vector2f> m_trianglePoints;
+    int m_currentTargetIndex;
+    float m_speed;
 };
