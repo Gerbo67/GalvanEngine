@@ -1,8 +1,7 @@
 #include "BaseApp.h"
 
 int
-main()
-{
+main() {
     BaseApp app;
     return app.run();
 }

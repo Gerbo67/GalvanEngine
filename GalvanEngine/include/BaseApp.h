@@ -5,8 +5,7 @@
 #include "ECS/Actor.h"
 
 class
-    BaseApp
-{
+BaseApp {
 public:
     BaseApp() = default;
     ~BaseApp() = default;

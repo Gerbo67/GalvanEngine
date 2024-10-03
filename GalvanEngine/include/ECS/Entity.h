@@ -6,8 +6,7 @@ class
 Window;
 
 class
-    Entity
-{
+Entity {
 public:
     /*
      * @brief Destructor virtual.
@@ -36,8 +35,7 @@ public:
      */
     template <typename T>
     void
-    addComponent(EngineUtilities::TSharedPointer<T> component)
-    {
+    addComponent(EngineUtilities::TSharedPointer<T> component) {
         static_assert(std::is_base_of<Component, T>::value, "T must be derived from Component");
         components.push_back(component.template dynamic_pointer_cast<Component>());
     }
@@ -49,13 +47,10 @@ public:
      */
     template <typename T>
     EngineUtilities::TSharedPointer<T>
-    getComponent()
-    {
-        for (auto& component : components)
-        {
+    getComponent() {
+        for (auto& component : components) {
             EngineUtilities::TSharedPointer<T> specificComponent = component.template dynamic_pointer_cast<T>();
-            if (specificComponent)
-            {
+            if (specificComponent) {
                 return specificComponent;
             }
         }

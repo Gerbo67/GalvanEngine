@@ -2,8 +2,7 @@
 #include "Prerequisites.h"
 #include "ShapeFactory.h"
 
-Actor::Actor(std::string actorName)
-{
+Actor::Actor(std::string actorName) {
     // Setup Actor name
     n_name = actorName;
 
@@ -16,14 +15,11 @@ Actor::Actor(std::string actorName)
     // Setup Sprite
 }
 
-void Actor::update(float deltaTime)
-{
+void Actor::update(float deltaTime) {
 }
 
-void Actor::render(Window& window)
-{
-    for (unsigned int i = 0; i < components.size(); i++)
-    {
+void Actor::render(Window& window) {
+    for (unsigned int i = 0; i < components.size(); i++) {
         window.draw(*components[i].dynamic_pointer_cast<ShapeFactory>()->getShape());
     }
 }

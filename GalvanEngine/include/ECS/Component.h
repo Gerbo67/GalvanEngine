@@ -5,8 +5,7 @@ class Window;
  * @enum ComponentType
  * @brief Tipos de componentes disponibles en el juego.
  */
-enum ComponentType
-{
+enum ComponentType {
     NONE = 0,
     TRANSFORM = 1,
     SPRITE = 2,
@@ -24,8 +23,7 @@ enum ComponentType
  * permitiendo actualizar y renderizar el componente, asi como obtener su tipo.
  */
 class
-    Component
-{
+Component {
 public:
     /*
      * @brief Constructor por defecto
@@ -36,9 +34,7 @@ public:
      * @brief Constructor con tipo de componente.
      * @param type Tipo del componente.
      */
-    Component(const ComponentType type) : m_type(type)
-    {
-    }
+    Component(const ComponentType type) : m_type(type) { }
 
     /*
      * @brief Destructor virtual.
