@@ -2,7 +2,8 @@
 #include "Entity.h"
 #include "Prerequisites.h"
 
-class Actor : Entity {
+class
+Actor : Entity {
 public:
     /*
      * @brief Constructor por defecto.
