@@ -10,7 +10,7 @@ public:
     BaseApp() = default;
     ~BaseApp() = default;
 
-    // Funcion que corre el programa en main
+    // Funcion encargada de ejecutar la aplicacion en main
     int
     run();
 
@@ -26,20 +26,26 @@ public:
     void
     render();
 
-    // Funcion de liberacion de memoria
     void
     cleanup();
 
+    void 
+    updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
 private:
     sf::Clock clock;
     sf::Time deltaTime;
 
-    Window* m_window;
+    Window * m_window;
     EngineUtilities::TSharedPointer<Actor> Triangle;
     EngineUtilities::TSharedPointer<Actor> Circle;
 
-    // NUEVO CODIGO DE PRACTICA
-    std::vector<sf::Vector2f> m_trianglePoints;
-    int m_currentTargetIndex;
-    float m_speed;
+    // Seek Activity
+    int currentWaypoint = 0;
+
+    std::vector<sf::Vector2f> waypoints = {
+        {100.0f, 100.0f},
+        {400.0f, 100.0f},
+        {400.0f, 400.0f},
+        {100.0f, 400.0f}
+    };
 };
