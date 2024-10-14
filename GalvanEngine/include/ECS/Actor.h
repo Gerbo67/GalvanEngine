@@ -2,6 +2,15 @@
 #include "Entity.h"
 #include "Prerequisites.h"
 
+/**
+ * @class Actor
+ * @brief Representa una entidad en la escena.
+ *
+ * La clase Actor puede contener múltiples componentes que definen 
+ * su comportamiento y apariencia. Es el objeto principal que se manipula 
+ * y renderiza en la escena.
+ */
+
 class
 Actor : Entity {
 public:

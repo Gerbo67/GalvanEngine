@@ -1,51 +1,76 @@
 ﻿#pragma once
 #include "Prerequisites.h"
 #include "Window.h"
-#include "ShapeFactory.h"
 #include "ECS/Actor.h"
 
+/**
+ * @class BaseApp
+ * @brief Clase base para la aplicación.
+ *
+ * La clase BaseApp controla el ciclo principal de la aplicación, manejando 
+ * la inicialización, actualización, renderizado y limpieza. Mantiene la 
+ * aplicación en funcionamiento mientras la ventana esté abierta.
+ */
 class
 BaseApp {
 public:
-    BaseApp() = default;
-    ~BaseApp() = default;
+    BaseApp() = default; ///< Constructor por defecto.
+    ~BaseApp() = default; ///< Destructor por defecto.
 
-    // Funcion encargada de ejecutar la aplicacion en main
+    /**
+     * @brief Función encargada de ejecutar la aplicación en main.
+     * @return Código de estado de la ejecución.
+     */
     int
     run();
 
-    // Funcion de inicializacion
+    /**
+     * @brief Función de inicialización.
+     * @return true si la inicialización es exitosa, false en caso contrario.
+     */
     bool
     initialize();
 
-    // Funcion que se actualiza por frame
+    /**
+     * @brief Función que se actualiza por frame.
+     */
     void
     update();
 
-    // Funcion de renderizado
+    /**
+     * @brief Función de renderizado.
+     */
     void
     render();
 
+    /**
+     * @brief Realiza la limpieza de recursos.
+     */
     void
     cleanup();
 
-    void 
+    /**
+     * @brief Actualiza el movimiento del círculo.
+     * @param deltaTime Tiempo transcurrido desde la última actualización.
+     * @param circle Puntero compartido al actor círculo.
+     */
+    void
     updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
+
 private:
-    sf::Clock clock;
-    sf::Time deltaTime;
+    sf::Clock clock; ///< Reloj para calcular deltaTime.
+    sf::Time deltaTime; ///< Almacena el tiempo transcurrido entre frames.
 
-    Window * m_window;
-    EngineUtilities::TSharedPointer<Actor> Triangle;
-    EngineUtilities::TSharedPointer<Actor> Circle;
+    Window* m_window; ///< Puntero a la ventana de la aplicación.
+    EngineUtilities::TSharedPointer<Actor> Triangle; ///< Puntero compartido al Actor del triángulo.
+    EngineUtilities::TSharedPointer<Actor> Circle; ///< Puntero compartido al Actor del círculo.
 
-    // Seek Activity
-    int currentWaypoint = 0;
+    int currentWaypoint = 0; ///< Índice del punto de recorrido actual.
 
     std::vector<sf::Vector2f> waypoints = {
         {100.0f, 100.0f},
         {400.0f, 100.0f},
         {400.0f, 400.0f},
         {100.0f, 400.0f}
-    };
+    }; ///< Lista de puntos de recorrido (waypoints).
 };

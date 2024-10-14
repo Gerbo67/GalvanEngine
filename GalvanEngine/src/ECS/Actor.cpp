@@ -2,22 +2,29 @@
 #include "Prerequisites.h"
 #include "ShapeFactory.h"
 #include "Transform.h"
-
+/**
+ * @brief Constructor de la clase Actor.
+ * @param actorName Nombre del actor.
+ */
 Actor::Actor(std::string actorName) {
-    // Setup Actor name
+    // Configurar nombre del Actor.
     n_name = actorName;
 
-    // Setup Shape
+    // Configurar Shape.
     EngineUtilities::TSharedPointer<ShapeFactory> shape = EngineUtilities::MakeShared<ShapeFactory>();
     addComponent(shape);
 
-    // Setup Transform
+    // Configurar Transform.
     EngineUtilities::TSharedPointer<Transform> transform = EngineUtilities::MakeShared<Transform>();
     addComponent(transform);
     
-    // Setup Sprite
+    // Configurar Sprite.
 }
 
+/**
+ * @brief Actualiza el estado del actor.
+ * @param deltaTime Tiempo transcurrido desde la última actualización.
+ */
 void
 Actor::update(float deltaTime) {
     auto transform = getComponent<Transform>();
@@ -30,6 +37,10 @@ Actor::update(float deltaTime) {
     }
 }
 
+/**
+ * @brief Renderiza los componentes del actor.
+ * @param window Contexto de la ventana para operaciones gráficas.
+ */
 void
 Actor::render(Window& window) {
     for (unsigned int i = 0; i < components.size(); i++) {

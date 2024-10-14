@@ -5,30 +5,37 @@
 class
 Window;
 
+/**
+ * @class Entity
+ * @brief Representa cualquier objeto en el juego o la aplicación gráfica.
+ *
+ * La clase Entity se usa como base para mejorar la organización y jerarquía 
+ * en la escena. Proporciona funcionalidades básicas comunes a todos los objetos.
+ */
 class
 Entity {
 public:
-    /*
+    /**
      * @brief Destructor virtual.
      */
     virtual
     ~Entity() = default;
 
-    /*
-     * @brief Método virtual puro para actualizar la entidad
+    /**
+     * @brief Método virtual puro para actualizar la entidad.
      * @param deltaTime El tiempo transcurrido desde la última actualización.
      */
     virtual void
     update(float deltaTime) = 0;
 
-    /*
+    /**
      * @brief Método virtual puro para renderizar la entidad.
      * @param window Contexto del dispositivo para operaciones gráficas.
      */
     virtual void
     render(Window& window) = 0;
 
-    /*
+    /**
      * @brief Agrega un componente a la entidad.
      * @tparam T Tipo del componente, debe derivar de Component.
      * @param component Puntero compartido al componente que se va a agregar.
@@ -40,8 +47,8 @@ public:
         components.push_back(component.template dynamic_pointer_cast<Component>());
     }
 
-    /*
-     * @brief Obtiene un componente de la entidad
+    /**
+     * @brief Obtiene un componente de la entidad.
      * @tparam T Tipo del componente que se va a obtener.
      * @return Puntero compartido al componente, o nullptr si no se encuentra.
      */
@@ -58,8 +65,8 @@ public:
     }
 
 protected:
-    bool isActive;
-    int id;
+    bool isActive; ///< Indica si la entidad está activa.
+    int id; ///< Identificador único de la entidad.
 
-    std::vector<EngineUtilities::TSharedPointer<Component>> components;
+    std::vector<EngineUtilities::TSharedPointer<Component>> components; ///< Lista de componentes de la entidad.
 };
