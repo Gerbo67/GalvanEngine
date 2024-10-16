@@ -1,0 +1,3 @@
+[submodule "GalvanEngine/include/UtilityLibrary"]
+	path = GalvanEngine/include/UtilityLibrary
+	url = https://github.com/Gerbo67/UtilityLibrary.git
