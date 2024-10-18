@@ -93,6 +93,8 @@ public:
     void
     destroy();
 
+   sf::Clock clock; ///< Reloj para calcular deltaTime.
+   sf::Time deltaTime; ///< Almacena el tiempo transcurrido entre frames.
 private:
     sf::RenderWindow* m_window; ///< Puntero a la ventana de renderizado de SFML.
 };

@@ -58,9 +58,6 @@ public:
     updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
 
 private:
-    sf::Clock clock; ///< Reloj para calcular deltaTime.
-    sf::Time deltaTime; ///< Almacena el tiempo transcurrido entre frames.
-
     Window* m_window; ///< Puntero a la ventana de la aplicación.
     EngineUtilities::TSharedPointer<Actor> Triangle; ///< Puntero compartido al Actor del triángulo.
     EngineUtilities::TSharedPointer<Actor> Circle; ///< Puntero compartido al Actor del círculo.

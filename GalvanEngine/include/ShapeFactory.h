@@ -75,17 +75,7 @@ public:
      */
     void
     setFillColor(const sf::Color& color);
-
-    /**
-     * @brief Actualiza la posición de la forma buscando un objetivo.
-     * @param targetPosition Posición del objetivo.
-     * @param speed Velocidad del movimiento.
-     * @param deltaTime Tiempo transcurrido desde la última actualización.
-     * @param range Rango dentro del cual el movimiento buscará el objetivo.
-     */
-    void
-    Seek(const sf::Vector2f& targetPosition, float speed, float deltaTime, float range);
-
+ 
     /**
      * @brief Establece la rotación de la forma.
      * @param angle Ángulo de rotación.

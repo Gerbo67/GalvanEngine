@@ -15,7 +15,7 @@ BaseApp::run() {
     
     while (m_window->isOpen()) {
         m_window->handleEvents();
-        deltaTime = clock.restart();
+        //deltaTime = clock.restart();
         update();
         render();
     }
@@ -65,18 +65,20 @@ BaseApp::initialize() {
  */
 void
 BaseApp::update() {
+    m_window->update();
+    
     // Posición del ratón
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window->getWindow());
     sf::Vector2f mousePosF(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y));
 
     if (!Triangle.isNull()) {
-        Triangle->update(deltaTime.asSeconds());
+        Triangle->update(m_window->deltaTime.asSeconds());
     }
     
     if (!Circle.isNull()) {
-        Circle->update(deltaTime.asSeconds());
+        Circle->update(m_window->deltaTime.asSeconds());
         /*Circle->getComponent<ShapeFactory>()->Seek(mousePosF, 200.0f, deltaTime.asSeconds(), 10.0f);*/
-        updateMovement(deltaTime.asSeconds(), Circle);
+        updateMovement(m_window->deltaTime.asSeconds(), Circle);
     }
 }
 
@@ -86,8 +88,16 @@ BaseApp::update() {
 void
 BaseApp::render() {
     m_window->clear();
-    Circle->render(*m_window);
-    Triangle->render(*m_window);
+    if (!Circle.isNull()) {
+        Circle->render(*m_window);
+    }
+    if (!Triangle.isNull()) {
+        Triangle->render(*m_window);
+    }
+    ImGui::Begin("Hello, world!");
+    ImGui::Text("This is a simple example.");
+    ImGui::End();
+    m_window->render();
     m_window->display();
 }
 
@@ -108,11 +118,15 @@ BaseApp::cleanup() {
 void
 BaseApp::updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle) {
     // Verificar si el Circle es nulo
-    if (!circle || circle.isNull()) return;
+    if (!circle || circle.isNull()) {
+        return;
+    }
 
     // Obtener el componente Transform
     auto transform = circle->getComponent<Transform>();
-    if (transform.isNull()) return;
+    if (transform.isNull()) {
+        return;
+    }
 
     // Posición actual del destino (punto de recorrido)
     sf::Vector2f targetPos = waypoints[currentWaypoint];

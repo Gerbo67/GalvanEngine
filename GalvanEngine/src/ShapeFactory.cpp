@@ -71,36 +71,6 @@ ShapeFactory::setFillColor(const sf::Color& color) {
 }
 
 /**
- * @brief Actualiza la posición de la forma buscando un objetivo.
- * @param targetPosition Posición del objetivo.
- * @param speed Velocidad del movimiento.
- * @param deltaTime Tiempo transcurrido desde la última actualización.
- * @param range Rango dentro del cual el movimiento buscará el objetivo.
- */
-void
-ShapeFactory::Seek(const sf::Vector2f& targetPosition,
-                   float speed,
-                   float deltaTime,
-                   float range) {
-    if (!m_shape) return;
-
-    // Obtener la posición actual de la forma
-    sf::Vector2f shapePosition = m_shape->getPosition();
-
-    // Calcular la dirección desde la forma hacia el objetivo
-    sf::Vector2f direction = targetPosition - shapePosition;
-
-    // Calcular la distancia al objetivo
-    float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-
-    // Si la distancia es mayor que el rango, mover la forma hacia el objetivo
-    if (length > range) {
-        direction /= length; // Normalizar el vector de dirección
-        m_shape->move(direction * speed * deltaTime);
-    }
-}
-
-/**
  * @brief Establece la rotación de la forma.
  * @param angle Ángulo de rotación.
  */
