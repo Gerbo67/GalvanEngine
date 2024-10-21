@@ -36,16 +36,43 @@ BaseApp::initialize() {
         return false;
     }
 
+    // Actor de Circuito
+    Track = EngineUtilities::MakeShared<Actor>("Track");
+    if (!Track.isNull()) {
+        Track->getComponent<ShapeFactory>()->createShape(ShapeType::RECTANGLE);
+
+        // Establecer posición, rotación y escala desde Transform
+        Track->getComponent<Transform>()->setPosition(sf::Vector2f(0.0f, 0.0f));
+        Track->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
+        Track->getComponent<Transform>()->setScale(sf::Vector2f(11.0f, 12.0f));
+
+        // Insertar textura
+        if(!texture.loadFromFile("circuit.png")) {
+            return false;
+        }
+        
+        Track->getComponent<ShapeFactory>()->getShape()->setTexture(&texture);
+    }
+
     // Actor de Círculo
     Circle = EngineUtilities::MakeShared<Actor>("Circle");
     if (!Circle.isNull()) {
         Circle->getComponent<ShapeFactory>()->createShape(ShapeType::CIRCLE);
-        Circle->getComponent<ShapeFactory>()->setFillColor(sf::Color::Blue);
+        //Circle->getComponent<ShapeFactory>()->setFillColor(sf::Color::Blue);
 
         // Establecer posición, rotación y escala desde Transform
         Circle->getComponent<Transform>()->setPosition(sf::Vector2f(200.0f, 200.0f));
         Circle->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
         Circle->getComponent<Transform>()->setScale(sf::Vector2f(1.0f, 1.0f));
+
+        // Insertar textura
+        /*
+        if(!texture.loadFromFile("gallina.png")) {
+            return false;
+        }
+        
+        Circle->getComponent<ShapeFactory>()->getShape()->setTexture(&texture);
+        */
     }
 
     // Actor de Triángulo
@@ -71,6 +98,10 @@ BaseApp::update() {
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window->getWindow());
     sf::Vector2f mousePosF(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y));
 
+    if (!Track.isNull()) {
+        Track->update(m_window->deltaTime.asSeconds());
+    }
+    
     if (!Triangle.isNull()) {
         Triangle->update(m_window->deltaTime.asSeconds());
     }
@@ -88,14 +119,20 @@ BaseApp::update() {
 void
 BaseApp::render() {
     m_window->clear();
+    if (!Track.isNull()) {
+        Track->render(*m_window);
+    }
+    
     if (!Circle.isNull()) {
         Circle->render(*m_window);
     }
+    
     if (!Triangle.isNull()) {
         Triangle->render(*m_window);
     }
     ImGui::Begin("Hello, world!");
     ImGui::Text("This is a simple example.");
+    //ImGui::Image(texture);
     ImGui::End();
     m_window->render();
     m_window->display();

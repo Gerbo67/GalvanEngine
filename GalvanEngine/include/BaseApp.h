@@ -61,13 +61,21 @@ private:
     Window* m_window; ///< Puntero a la ventana de la aplicación.
     EngineUtilities::TSharedPointer<Actor> Triangle; ///< Puntero compartido al Actor del triángulo.
     EngineUtilities::TSharedPointer<Actor> Circle; ///< Puntero compartido al Actor del círculo.
+    EngineUtilities::TSharedPointer<Actor> Track; ///< Puntero compartido al Actor del circuito.
 
     int currentWaypoint = 0; ///< Índice del punto de recorrido actual.
 
     std::vector<sf::Vector2f> waypoints = {
-        {100.0f, 100.0f},
-        {400.0f, 100.0f},
-        {400.0f, 400.0f},
-        {100.0f, 400.0f}
+     {720.0f, 350.0f},
+     {720.0f, 260.0f},
+     {125.0f, 50.0f},
+     {70.0f, 120.0f},
+     {70.0f, 450.0f},
+     {400.0f, 350.0f},
+     {550.0f, 500.0f},
+     {650.0f, 550.0f},
+     {720.0f, 450.0f}
     }; ///< Lista de puntos de recorrido (waypoints).
+
+    sf::Texture texture;
 };

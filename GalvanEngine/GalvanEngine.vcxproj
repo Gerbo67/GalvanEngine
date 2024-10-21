@@ -25,6 +25,7 @@
     <ClCompile Include="..\ThirdParties\imgui-sfml-2.6.x\imgui_draw.cpp" />
     <ClCompile Include="..\ThirdParties\imgui-sfml-2.6.x\imgui_tables.cpp" />
     <ClCompile Include="..\ThirdParties\imgui-sfml-2.6.x\imgui_widgets.cpp" />
+    <ClCompile Include="include\UtilityLibrary\UtilityLibrary.cpp" />
     <ClCompile Include="src\BaseApp.cpp" />
     <ClCompile Include="src\ECS\Actor.cpp" />
     <ClCompile Include="src\GalvanEngine.cpp" />
@@ -52,10 +53,46 @@
     <ClInclude Include="include\Prerequisites.h" />
     <ClInclude Include="include\ShapeFactory.h" />
     <ClInclude Include="include\Transform.h" />
+    <ClInclude Include="include\UtilityLibrary\include\Quaternion.h" />
+    <ClInclude Include="include\UtilityLibrary\include\Vector2.h" />
+    <ClInclude Include="include\UtilityLibrary\include\Vector3.h" />
+    <ClInclude Include="include\UtilityLibrary\include\Vector4.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="include\ECS\Entity.h" />
+    <Content Include="include\UtilityLibrary\.git" />
+    <Content Include="include\UtilityLibrary\.gitignore" />
+    <Content Include="include\UtilityLibrary\.idea\.gitignore" />
+    <Content Include="include\UtilityLibrary\.idea\.idea.UtilityLibrary\.idea\.gitignore" />
+    <Content Include="include\UtilityLibrary\.idea\.idea.UtilityLibrary\.idea\encodings.xml" />
+    <Content Include="include\UtilityLibrary\.idea\.idea.UtilityLibrary\.idea\indexLayout.xml" />
+    <Content Include="include\UtilityLibrary\.idea\.idea.UtilityLibrary\.idea\projectSettingsUpdater.xml" />
+    <Content Include="include\UtilityLibrary\.idea\.idea.UtilityLibrary\.idea\vcs.xml" />
+    <Content Include="include\UtilityLibrary\.idea\.idea.UtilityLibrary\.idea\workspace.xml" />
+    <Content Include="include\UtilityLibrary\.idea\encodings.xml" />
+    <Content Include="include\UtilityLibrary\.idea\indexLayout.xml" />
+    <Content Include="include\UtilityLibrary\.idea\projectSettingsUpdater.xml" />
+    <Content Include="include\UtilityLibrary\.idea\vcs.xml" />
+    <Content Include="include\UtilityLibrary\.idea\workspace.xml" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\CopilotIndices\0.2.1653.9816\CodeChunks.db" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\CopilotIndices\0.2.1653.9816\SemanticSymbols.db" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\CopilotIndices\0.2.1653.9816\SemanticSymbols.db-shm" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\CopilotIndices\0.2.1653.9816\SemanticSymbols.db-wal" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\FileContentIndex\aec270bc-70a0-40fe-b258-a29aafb45f96.vsidx" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\v17\.suo" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\v17\Browse.VC.db" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\v17\DocumentLayout.json" />
+    <Content Include="include\UtilityLibrary\.vs\UtilityLibrary\v17\Solution.VC.db" />
+    <Content Include="include\UtilityLibrary\LICENSE" />
+    <Content Include="include\UtilityLibrary\README.md" />
+    <Content Include="include\UtilityLibrary\UtilityLibrary.sln" />
+    <Content Include="include\UtilityLibrary\UtilityLibrary.vcxproj" />
+    <Content Include="include\UtilityLibrary\UtilityLibrary.vcxproj.filters" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="include\UtilityLibrary\UtilityLibrary\x64\Debug\UtilityLibrary.tlog\" />
+    <Folder Include="include\UtilityLibrary\x64\Debug\" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

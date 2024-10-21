@@ -34,19 +34,22 @@ Window::handleEvents() {
     sf::Event event;
     while (m_window->pollEvent(event)) {
         ImGui::SFML::ProcessEvent(event);
-        if (event.type == sf::Event::Closed) {
-            m_window->close();
-        }
 
-        // Manejar el evento de redimensionar
-        if (event.type == sf::Event::Resized) {
+        switch (event.type) {
+        case sf::Event::Closed:
+            m_window->close();
+            break;
+        case sf::Event::Resized:
+            // Manejar el evento de redimensionar
             // Obtener el nuevo tamaño de la ventana
             unsigned int newWidth = event.size.width;
             unsigned int newHeight = event.size.height;
+            
             // Opcional: Redefinir el tamaño de la vista para ajustarse al nuevo tamaño de la ventana
             sf::View view = m_window->getView();
             view.setSize(static_cast<float>(newWidth), static_cast<float>(newHeight));
             m_window->setView(view);
+            break;
         }
     }
 }
