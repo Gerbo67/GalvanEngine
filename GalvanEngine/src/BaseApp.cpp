@@ -12,6 +12,8 @@ BaseApp::run() {
     if (!initialize()) {
         ERROR("BaseApp", "run", "Initializes result on a false statemente, check method validations");
     }
+
+    m_GUI.init();
     
     while (m_window->isOpen()) {
         m_window->handleEvents();
@@ -30,7 +32,7 @@ BaseApp::run() {
  */
 bool
 BaseApp::initialize() {
-    m_window = new Window(800, 600, "Galvan Engine");
+    m_window = new Window(1920, 1080, "Galvan Engine");
     if (!m_window) {
         ERROR("BaseApp", "initialize", "Error on window creation, var is null");
         return false;
@@ -66,13 +68,11 @@ BaseApp::initialize() {
         Circle->getComponent<Transform>()->setScale(sf::Vector2f(1.0f, 1.0f));
 
         // Insertar textura
-        /*
-        if(!texture.loadFromFile("gallina.png")) {
+        if(!characterTexture.loadFromFile("Characters/tile005.png")) {
             return false;
         }
         
-        Circle->getComponent<ShapeFactory>()->getShape()->setTexture(&texture);
-        */
+        Circle->getComponent<ShapeFactory>()->getShape()->setTexture(&characterTexture);
     }
 
     // Actor de Triángulo
@@ -130,10 +130,85 @@ BaseApp::render() {
     if (!Triangle.isNull()) {
         Triangle->render(*m_window);
     }
-    ImGui::Begin("Hello, world!");
-    ImGui::Text("This is a simple example.");
-    //ImGui::Image(texture);
-    ImGui::End();
+
+    //sf::Texture texture = m_window->renderTexture->getTexture();
+    //ImGui::Image((void*)(intptr_t)texture.getNativeHandle(), ImVec2(800, 600));
+    
+    // Configuración del estilo y colores (opcional)
+    ImGuiStyle& style = ImGui::GetStyle();
+    // Aquí puedes configurar el estilo si lo deseas
+
+    // Comienzo de la interfaz
+    ImGui::Begin("Panel Neobrutalista");
+
+    // Texto de bienvenida
+    ImGui::Text("Bienvenido a mi interfaz");
+
+    // **Ventana de Jerarquía**
+    ImGui::Begin("Jerarquia");
+
+    // Lista simple de elementos (nombres de los objetos)
+    static const char* items[] = { "Camara", "Luz", "Jugador", "Enemigo 1", "Enemigo 2" };
+    static int selected = -1; // Índice del elemento seleccionado
+
+    // Mostrar la lista de elementos
+    for (int i = 0; i < IM_ARRAYSIZE(items); i++)
+    {
+        // Crear un identificador único para cada elemento
+        char label[128];
+        sprintf(label, "%s##%d", items[i], i);
+
+        // Mostrar el elemento como seleccionable
+        if (ImGui::Selectable(label, selected == i))
+        {
+            selected = i; // Actualizar el elemento seleccionado
+        }
+    }
+
+    ImGui::End(); // Fin de la ventana de Jerarquía
+
+    // **Ventana de Inspector**
+    ImGui::Begin("Inspector");
+
+    if (selected != -1)
+    {
+        // Mostrar y editar propiedades del elemento seleccionado
+        char buffer[128];
+        strcpy(buffer, items[selected]); // Copiar el nombre del elemento seleccionado
+
+        // Permitir editar el nombre
+        if (ImGui::InputText("Nombre", buffer, IM_ARRAYSIZE(buffer)))
+        {
+            // Si el nombre ha cambiado, actualizarlo
+            // Nota: Como 'items' es un arreglo de punteros a const char*, no podemos modificarlo directamente.
+            // Para este ejemplo simple, ignoraremos la actualización real.
+        }
+
+        // Propiedades de ejemplo
+        static float position[3] = { 0.0f, 0.0f, 0.0f };
+        ImGui::DragFloat3("Posicion", position, 0.1f);
+
+        static float rotation[3] = { 0.0f, 0.0f, 0.0f };
+        ImGui::DragFloat3("Rotacion", rotation, 0.1f);
+
+        static float scale[3] = { 1.0f, 1.0f, 1.0f };
+        ImGui::DragFloat3("Escala", scale, 0.1f);
+    }
+    else
+    {
+        ImGui::Text("Seleccione un elemento de la jerarquia.");
+    }
+
+    ImGui::End(); // Fin de la ventana de Inspector
+
+    // Botón Aceptar
+    if (ImGui::Button("Aceptar")) {
+        // Acción al pulsar el botón
+    }
+
+    ImGui::End(); // Fin del Panel Neobrutalista
+
+    
     m_window->render();
     m_window->display();
 }

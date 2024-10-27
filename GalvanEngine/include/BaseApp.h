@@ -2,6 +2,7 @@
 #include "Prerequisites.h"
 #include "Window.h"
 #include "ECS/Actor.h"
+#include "GUI.h"
 
 /**
  * @class BaseApp
@@ -78,4 +79,7 @@ private:
     }; ///< Lista de puntos de recorrido (waypoints).
 
     sf::Texture texture;
+    sf::Texture characterTexture;
+   
+    GUI m_GUI;
 };

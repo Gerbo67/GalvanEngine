@@ -8,7 +8,8 @@
  */
 Window::Window(int width, int height, const std::string& title) {
     m_window = new sf::RenderWindow(sf::VideoMode(width, height), title);
-
+    //renderTexture->create(800,600); 
+    
     if (!m_window) {
         ERROR("Window", "Window", "CHECK CONSTRUCTOR");
     } else {
@@ -24,6 +25,7 @@ Window::Window(int width, int height, const std::string& title) {
 Window::~Window() {
     ImGui::SFML::Shutdown();
     delete m_window;
+    //delete renderTexture;
 }
 
 /**
@@ -64,6 +66,12 @@ Window::clear() {
     } else {
         ERROR("Window", "clear", "CHECK FOR WINDOW POINTER DATA");
     }
+
+    /*if (renderTexture != nullptr) {
+        renderTexture->clear();
+    } else {
+        ERROR("RenderTexture", "clear", "CHECK FOR WINDOW POINTER DATA");
+    }*/
 }
 
 /**
@@ -76,6 +84,12 @@ Window::display() {
     } else {
         ERROR("Window", "display", "CHECK FOR WINDOW POINTER DATA");
     }
+
+    /*if (renderTexture != nullptr) {
+        renderTexture->display();
+    } else {
+        ERROR("RenderTexture", "display", "CHECK FOR WINDOW POINTER DATA");
+    }*/
 }
 
 /**

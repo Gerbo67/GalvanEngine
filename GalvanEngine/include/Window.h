@@ -10,7 +10,8 @@
  * utilizada.
  */
 class
-Window {
+Window
+{
 public:
     /**
      * @brief Constructor por defecto.
@@ -92,9 +93,10 @@ public:
      */
     void
     destroy();
-
-   sf::Clock clock; ///< Reloj para calcular deltaTime.
-   sf::Time deltaTime; ///< Almacena el tiempo transcurrido entre frames.
+ 
+    sf::Clock clock; ///< Reloj para calcular deltaTime.
+    sf::Time deltaTime; ///< Almacena el tiempo transcurrido entre frames.
+    sf::RenderTexture* renderTexture;
 private:
     sf::RenderWindow* m_window; ///< Puntero a la ventana de renderizado de SFML.
 };
