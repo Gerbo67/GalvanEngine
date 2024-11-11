@@ -2,6 +2,3 @@ Code: 0 - Messages:
    Actor named Track was created.
    Actor named Circle was created.
    All programs were initialized correctly
-   Actor named Criculo actor was created.
-   Actor named Circle was created.
-   Actor named Circleds was created.

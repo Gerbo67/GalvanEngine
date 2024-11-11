@@ -70,10 +70,16 @@ public:
     sf::RenderWindow*
     getWindow();
  
-    void 
+    /**
+     * @brief Renderiza el contenido a una textura en lugar de la ventana principal.
+     */
+    void
     renderToTexture();
 
-    void 
+    /**
+     * @brief Presenta el contenido en la interfaz gráfica de imgui.
+     */
+    void
     showInImGui();
 
     /**

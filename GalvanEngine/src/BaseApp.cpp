@@ -4,8 +4,7 @@
 #include "Transform.h"
 #include "Services\NotificationService.h"
 
-BaseApp::~BaseApp()
-{
+BaseApp::~BaseApp() {
     NotificationService& notifier = NotificationService::getInstance();
     notifier.saveMessagesToFile("LogData.txt");
 }
