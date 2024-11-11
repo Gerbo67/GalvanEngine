@@ -1,25 +1,45 @@
 ﻿#include "GUI.h"
-#include "Window.h"
+
+#include "ShapeFactory.h"
+#include "Transform.h"
 #include "ECS/Actor.h"
 
+class
+ShapeFactory;
+
+/**
+ * @brief Inicializa la GUI y configura el estilo.
+ */
 void
 GUI::init() {
-    // Setup GUI Style
+    // Configurar estilo de GUI
     setupGUIStyle();
 }
 
+/**
+ * @brief Actualiza la GUI. Este método puede ser extendido para incluir lógica de actualización en cada frame.
+ */
 void
 GUI::update() {
 }
 
+/**
+ * @brief Renderiza la GUI. Método utilizado para añadir lógica de renderizado.
+ */
 void
 GUI::render() {
 }
 
+/**
+ * @brief Destruye la GUI y libera los recursos asociados.
+ */
 void
 GUI::destroy() {
 }
 
+/**
+ * @brief Configura el estilo de la GUI utilizando colores y espaciamiento específicos.
+ */
 void
 GUI::setupGUIStyle() {
     ImGuiStyle& style = ImGui::GetStyle();
@@ -114,56 +134,10 @@ GUI::setupGUIStyle() {
     style.FramePadding = ImVec2(4, 2);
 }
 
-void GUI::Outliner(std::vector<EngineUtilities::TSharedPointer<Actor>> actors)
-{
-    ImGui::Begin("Outliner");
-
-    // Iterate over the actors
-    for (size_t i = 0; i < actors.size(); ++i)
-    {
-        auto& actor = actors[i];
-        if (actor.isNull())
-            continue;
-
-        // Set node flags
-        ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-
-        // Highlight the selected actor
-        if (actor == m_actors)
-            node_flags |= ImGuiTreeNodeFlags_Selected;
-
-        // Create a tree node for the actor
-        bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, actor->getName().c_str());
-
-        // Handle selection
-        if (ImGui::IsItemClicked())
-        {
-            m_actors = actor;
-            // You can perform additional actions when an actor is selected
-        }
-
-        // If the node is open, display its components
-        if (node_open)
-        {
-            // Display components
-            const auto& components = actor->getComponents();
-            for (size_t j = 0; j < components.size(); ++j)
-            {
-                auto& component = components[j];
-                if (!component.isNull())
-                {
-                    ImGui::BulletText("%s", component->getTypeName().c_str());
-                }
-            }
-
-            ImGui::TreePop();
-        }
-    }
-
-    ImGui::End();
-}
-
-
+/**
+ * @brief Muestra una consola con los mensajes del programa.
+ * @param programMessages Mapa de mensajes del programa categorizados por tipo de error.
+ */
 void
 GUI::console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages) {
     ImGui::Begin("Console");
@@ -176,7 +150,7 @@ GUI::console(const std::map<ConsolErrorType, std::vector<std::string>>& programM
     ImGui::BeginChild("ScrollingRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
     for (const auto& pair : programMessages) {
-        // Establece color según el tipo de mensaje
+        // Establecer color según el tipo de mensaje
         ImVec4 color;
         switch (pair.first) {
         case ConsolErrorType::ERROR:
@@ -205,5 +179,147 @@ GUI::console(const std::map<ConsolErrorType, std::vector<std::string>>& programM
         ImGui::SetScrollHereY(1.0f);
 
     ImGui::EndChild();
+    ImGui::End();
+}
+
+/**
+ * @brief Muestra un componente Outliner que permite organizar y seleccionar actores.
+ * @param actors Vector de actores a mostrar en el Outliner.
+ */
+void
+GUI::Outliner(std::vector<EngineUtilities::TSharedPointer<Actor>> actors) {
+    ImGui::Begin("Outliner");
+
+    // Iterar sobre los actores
+    for (size_t i = 0; i < actors.size(); ++i) {
+        auto& actor = actors[i];
+        if (actor.isNull())
+            continue;
+
+        // Establecer flags del nodo
+        ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+
+        // Resaltar el actor seleccionado
+        if (actor == m_actors)
+            node_flags |= ImGuiTreeNodeFlags_Selected;
+
+        // Crear un nodo de árbol para el actor
+        bool node_open = ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, actor->getName().c_str());
+
+        // Manejar la selección
+        if (ImGui::IsItemClicked()) {
+            m_actors = actor;
+        }
+
+        // Si el nodo está abierto, mostrar sus componentes
+        if (node_open)
+        {
+            // Mostrar componentes
+            const auto& components = actor->getComponents();
+            for (size_t j = 0; j < components.size(); ++j)
+            {
+                auto& component = components[j];
+                if (!component.isNull())
+                {
+                    ImGui::BulletText("%s", component->getTypeName().c_str());
+                }
+            }
+
+            ImGui::TreePop();
+        }
+    }
+
+    ImGui::End();
+}
+
+/**
+ * @brief Muestra un componente para agregar actores con un tipo de forma específico.
+ * @param actors Vector de actores donde se añadirá el nuevo actor.
+ */
+void
+GUI::PlaceActors(std::vector<EngineUtilities::TSharedPointer<Actor>>& actors) {
+    ImGui::Begin("Place Actors");
+
+    static char actorName[128] = "";
+    ImGui::InputText("Name", actorName, IM_ARRAYSIZE(actorName));
+
+    static int shapeType = 0;
+    const char* shapeTypes[] = {"NONE", "CIRCLE", "RECTANGLE", "TRIANGLE"};
+    ImGui::Combo("Shape Type", &shapeType, shapeTypes, IM_ARRAYSIZE(shapeTypes));
+
+    if (ImGui::Button("Create Actor")) {
+        EngineUtilities::TSharedPointer<Actor> newActor = EngineUtilities::MakeShared<Actor>(actorName);
+
+        auto shapeFactory = newActor->getComponent<ShapeFactory>();
+        if (shapeFactory) {
+            switch (shapeType) {
+            case 1:
+                shapeFactory->createShape(ShapeType::CIRCLE);
+                break;
+            case 2:
+                shapeFactory->createShape(ShapeType::RECTANGLE);
+                break;
+            case 3:
+                shapeFactory->createShape(ShapeType::TRIANGLE);
+                break;
+            }
+        }
+        else {
+            ImGui::Text("ShapeFactory component not found.");
+        }
+
+        actors.push_back(newActor);
+    }
+
+    ImGui::End();
+}
+
+/**
+ * @brief Muestra el inspector que permite ver y editar las propiedades de los actores y sus componentes.
+ * @param actors Vector de actores a mostrar en el inspector.
+ */
+void
+GUI::Inspector(std::vector<EngineUtilities::TSharedPointer<Actor>> actors) {
+    ImGui::Begin("Inspector");
+
+    if (m_actors) {
+        auto& actor = m_actors;
+
+        char actorName[128];
+        snprintf(actorName, sizeof(actorName), "%s", actor->getName().c_str());
+        if (ImGui::InputText("Name", actorName, sizeof(actorName))) {
+            actor->setName(actorName);
+        }
+
+        const auto& components = actor->getComponents();
+        for (size_t j = 0; j < components.size(); ++j) {
+            auto& component = components[j];
+            if (!component.isNull()) {
+                ImGui::Text("%s", component->getTypeName().c_str());
+
+                if (component->getTypeName() == "Transform") {
+                    auto transform = actor->getComponent<Transform>();
+
+                    if (transform) {
+                        sf::Vector2f pos = transform->getPosition();
+                        if (ImGui::DragFloat2("Position", &pos.x)) {
+                            transform->setPosition(pos);
+                        }
+
+                        sf::Vector2f scale = transform->getScale();
+                        if (ImGui::DragFloat2("Scale", &scale.x)) {
+                            transform->setScale(scale);
+                        }
+
+                        sf::Vector2f rot = transform->getRotation();
+                        if (ImGui::DragFloat2("Rotation", &rot.x)) {
+                            transform->setRotation(rot);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     ImGui::End();
 }

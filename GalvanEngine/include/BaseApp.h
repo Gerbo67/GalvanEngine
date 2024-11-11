@@ -65,6 +65,7 @@ private:
     EngineUtilities::TSharedPointer<Actor> Track; ///< Puntero compartido al Actor del circuito.
  
     std::vector< EngineUtilities::TSharedPointer<Actor>> m_actors;
+    EngineUtilities::TSharedPointer<Actor> m_selectedActor;
 
     int currentWaypoint = 0; ///< Índice del punto de recorrido actual.
 
