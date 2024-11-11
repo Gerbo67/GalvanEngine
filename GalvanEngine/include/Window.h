@@ -69,6 +69,12 @@ public:
      */
     sf::RenderWindow*
     getWindow();
+ 
+    void 
+    renderToTexture();
+
+    void 
+    showInImGui();
 
     /**
      * @brief Inicializa la ventana y sus recursos.
@@ -96,7 +102,8 @@ public:
  
     sf::Clock clock; ///< Reloj para calcular deltaTime.
     sf::Time deltaTime; ///< Almacena el tiempo transcurrido entre frames.
-    sf::RenderTexture* renderTexture;
+    sf::RenderTexture m_renderTexture;
 private:
     sf::RenderWindow* m_window; ///< Puntero a la ventana de renderizado de SFML.
+    sf::View m_view;
 };

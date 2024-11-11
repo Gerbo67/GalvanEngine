@@ -44,6 +44,9 @@ public:
     virtual
     ~Component() = default;
 
+    virtual
+    std::string getTypeName() const = 0;
+
     /**
      * @brief Método virtual puro para actualizar el componente.
      * @param deltaTime El tiempo transcurrido desde la última actualización.

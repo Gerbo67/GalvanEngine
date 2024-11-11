@@ -1,0 +1,5 @@
+Code: 0 - Messages: 
+   Actor named Track was created.
+   Actor named Circle was created.
+   Actor named Triangle was created.
+   All programs were initialized correctly

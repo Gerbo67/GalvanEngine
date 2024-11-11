@@ -123,6 +123,8 @@ public:
         return scale;
     }
 
+    virtual std::string getTypeName() const override { return "Transform"; }
+
 private:
     sf::Vector2f position; ///< Posición del objeto.
     sf::Vector2f rotation; ///< Rotación del objeto.

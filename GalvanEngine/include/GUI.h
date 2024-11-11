@@ -1,4 +1,8 @@
 ﻿#pragma once
+#include "Prerequisites.h"
+
+class
+Actor;
 
 class
 Window;
@@ -38,4 +42,13 @@ public:
     */
     void
     setupGUIStyle();
+
+    void
+    Outliner(std::vector<EngineUtilities::TSharedPointer<Actor>> actors);
+
+    void 
+    console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages);
+
+private:
+    EngineUtilities::TSharedPointer<Actor> m_actors;
 };

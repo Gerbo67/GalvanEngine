@@ -6,6 +6,8 @@
 #include <sstream>
 #include <vector>
 #include <thread>
+#include <map>
+#include <fstream>
 
 // Third Parties
 #include <SFML/Graphics.hpp>
@@ -24,6 +26,13 @@ ShapeType {
     CIRCLE = 1,
     RECTANGLE = 2,
     TRIANGLE = 3
+  };
+
+enum 
+ConsolErrorType {
+    INFO = 0,
+    WARNING = 1,
+    ERROR = 2
   };
 
 // MACRO for safe release of resources

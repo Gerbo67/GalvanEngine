@@ -47,6 +47,15 @@ public:
     void
     destroy();
 
+    std::string getName() const {
+     return m_name;
+    }
+
+    const std::vector<EngineUtilities::TSharedPointer<Component>>&
+    getComponents() const {
+     return components;
+    }
+
     /*
      * @brief Obtiene un componente especifico del actor.
      * @tparam T Tipo del componente que se va a obtener.
@@ -57,7 +66,7 @@ public:
     getComponent();
 
 private:
-    std::string n_name = "Actor"; ///< Nombre del actor.
+    std::string m_name = "Actor"; ///< Nombre del actor.
 };
 
 /*

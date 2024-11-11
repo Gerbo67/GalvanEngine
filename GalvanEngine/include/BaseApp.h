@@ -16,7 +16,7 @@ class
 BaseApp {
 public:
     BaseApp() = default; ///< Constructor por defecto.
-    ~BaseApp() = default; ///< Destructor por defecto.
+    ~BaseApp(); ///< Destructor por defecto.
 
     /**
      * @brief Función encargada de ejecutar la aplicación en main.
@@ -63,6 +63,8 @@ private:
     EngineUtilities::TSharedPointer<Actor> Triangle; ///< Puntero compartido al Actor del triángulo.
     EngineUtilities::TSharedPointer<Actor> Circle; ///< Puntero compartido al Actor del círculo.
     EngineUtilities::TSharedPointer<Actor> Track; ///< Puntero compartido al Actor del circuito.
+ 
+    std::vector< EngineUtilities::TSharedPointer<Actor>> m_actors;
 
     int currentWaypoint = 0; ///< Índice del punto de recorrido actual.
 

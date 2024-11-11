@@ -108,6 +108,9 @@ public:
     getShape() {
         return m_shape;
     }
+ 
+    virtual
+    std::string getTypeName() const override { return "ShapeFactory"; }
 
 private:
     sf::Shape* m_shape; ///< Puntero a la forma gestionada.

@@ -2,13 +2,17 @@
 #include "Prerequisites.h"
 #include "ShapeFactory.h"
 #include "Transform.h"
+#include "Services/NotificationService.h"
+
 /**
  * @brief Constructor de la clase Actor.
  * @param actorName Nombre del actor.
  */
 Actor::Actor(std::string actorName) {
+    NotificationService& notifier = NotificationService::getInstance();
+    
     // Configurar nombre del Actor.
-    n_name = actorName;
+    m_name = actorName;
 
     // Configurar Shape.
     EngineUtilities::TSharedPointer<ShapeFactory> shape = EngineUtilities::MakeShared<ShapeFactory>();
@@ -19,6 +23,9 @@ Actor::Actor(std::string actorName) {
     addComponent(transform);
     
     // Configurar Sprite.
+
+    // Notify that the actor was created correctly
+    notifier.Log("Actor named " + m_name + " was created.");
 }
 
 /**

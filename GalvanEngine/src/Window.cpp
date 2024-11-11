@@ -17,6 +17,10 @@ Window::Window(int width, int height, const std::string& title) {
     }
 
     ImGui::SFML::Init(*m_window);  // Inicializa ImGui-SFML
+
+    if (!m_renderTexture.create(width, height)) {
+        ERROR("Window", "RenderTexture", "CHECK CREATION");
+    }
 }
 
 /**
@@ -44,13 +48,16 @@ Window::handleEvents() {
         case sf::Event::Resized:
             // Manejar el evento de redimensionar
             // Obtener el nuevo tamaño de la ventana
-            unsigned int newWidth = event.size.width;
-            unsigned int newHeight = event.size.height;
+            unsigned int width = event.size.width;
+            unsigned int height = event.size.height;
             
             // Opcional: Redefinir el tamaño de la vista para ajustarse al nuevo tamaño de la ventana
             sf::View view = m_window->getView();
-            view.setSize(static_cast<float>(newWidth), static_cast<float>(newHeight));
+            view.setSize(static_cast<float>(width), static_cast<float>(height));
             m_window->setView(view);
+
+            // Actualizar RenderTexture si la ventana cambia de tamaño
+            m_renderTexture.create(width, height);
             break;
         }
     }
@@ -65,6 +72,10 @@ Window::clear() {
         m_window->clear();
     } else {
         ERROR("Window", "clear", "CHECK FOR WINDOW POINTER DATA");
+    }
+
+    if (m_renderTexture.getSize().x > 0 && m_renderTexture.getSize().y > 0) {
+        m_renderTexture.clear();
     }
 
     /*if (renderTexture != nullptr) {
@@ -112,10 +123,15 @@ Window::isOpen() const {
  */
 void
 Window::draw(const sf::Drawable& drawable) {
-    if (m_window != nullptr) {
-        m_window->draw(drawable);
-    } else {
-        ERROR("Window", "draw", "CHECK FOR WINDOW POINTER DATA");
+    // if (m_window != nullptr) {
+    //     m_window->draw(drawable);
+    // } else {
+    //     ERROR("Window", "draw", "CHECK FOR WINDOW POINTER DATA");
+    // }
+
+    // Dibujar en la RenderTexture en lugar de la ventana directamente
+    if (m_renderTexture.getSize().x > 0 && m_renderTexture.getSize().y > 0) {
+        m_renderTexture.draw(drawable);
     }
 }
 
@@ -131,6 +147,25 @@ Window::getWindow() {
         ERROR("Window", "getWindow", "CHECK FOR WINDOW POINTER DATA");
         return nullptr;
     }
+}
+
+void 
+Window::renderToTexture() {
+    // Después de renderizar todo lo que quieras en la textura
+    m_renderTexture.display();
+}
+
+void 
+Window::showInImGui() {
+    const sf::Texture& texture = m_renderTexture.getTexture();
+
+    // Obtener el tamaño de la textura
+    ImVec2 size(texture.getSize().x, texture.getSize().y);
+
+    // Renderizar la textura en ImGui con las coordenadas UV invertidas en el eje Y
+    ImGui::Begin("Scene");
+    ImGui::Image((void*)(intptr_t)texture.getNativeHandle(), size, ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::End();
 }
 
 void
@@ -151,5 +186,6 @@ Window::render() {
  */
 void
 Window::destroy() {
+    ImGui::SFML::Shutdown();
     SAFE_PTR_RELEASE(m_window);
 }
