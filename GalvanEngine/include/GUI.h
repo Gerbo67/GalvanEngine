@@ -43,12 +43,15 @@ public:
     void
     setupGUIStyle();
 
+    void
+    barMenu();
+
     /**
      * @brief Muestra el outliner con la lista de actores.
      * @param actors Vector de actores a listar.
      */
     void
-    Outliner(std::vector<EngineUtilities::TSharedPointer<Actor>> actors);
+    outliner(std::vector<EngineUtilities::TSharedPointer<Actor>> actors);
 
     /**
     * @brief Muestra una consola con mensajes del programa.
@@ -62,15 +65,22 @@ public:
      * @param actors Vector de actores en la escena.
      */
     void
-    PlaceActors(std::vector<EngineUtilities::TSharedPointer<Actor>>& actors);
+    placeActors(std::vector<EngineUtilities::TSharedPointer<Actor>>& actors);
  
      /**
      * @brief Muestra el inspector del actor seleccionado con sus componentes.
      * @param actors Vector de actores a inspeccionar.
      */
     void
-    Inspector(std::vector<EngineUtilities::TSharedPointer<Actor>> actors);
+    inspector(std::vector<EngineUtilities::TSharedPointer<Actor>> actors);
+    
+    void
+    vec2Control(const std::string& label,
+                  float* values,
+                  float resetValues = 0.0f,
+                  float columnWidth = 100.0f);
 
 private:
     EngineUtilities::TSharedPointer<Actor> m_actors; ///< Actor seleccionado en el GUI.
+    int selectedActorIndex = -1;
 };

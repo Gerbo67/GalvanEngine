@@ -20,7 +20,8 @@ public:
     Transform() : position(0.0f, 0.0f),
                   rotation(0.0f, 0.0f),
                   scale(1.0f, 1.0f),
-                  Component(ComponentType::TRANSFORM) { }
+                  Component(ComponentType::TRANSFORM) {
+    }
 
     /**
      * @brief Destructor virtual.
@@ -33,20 +34,23 @@ public:
      * @param deltaTime El tiempo transcurrido desde la última actualización.
      */
     void
-    update(float deltaTime) override { }
+    update(float deltaTime) override {
+    }
 
     /**
      * @brief Renderiza el componente de malla.
      * @param window Contexto del dispositivo para operaciones gráficas.
      */
     void
-    render(Window window) override { }
+    render(Window window) override {
+    }
 
     /**
      * @brief Destruye el componente.
      */
     void
-    destroy() { }
+    destroy() {
+    }
 
     /**
      * @brief Actualiza la posición del objeto buscando un objetivo.
@@ -67,6 +71,13 @@ public:
             direction /= length; // Normaliza el vector
             position += direction * speed * deltaTime;
         }
+    }
+
+    void
+    setTransform(const sf::Vector2f& _position, const sf::Vector2f& _rotation, const sf::Vector2f& _scale) {
+        position = _position;
+        rotation = _rotation;
+        scale = _scale;
     }
 
     /**
@@ -123,7 +134,20 @@ public:
         return scale;
     }
 
-    virtual std::string getTypeName() const override { return "Transform"; }
+    float*
+    getPosData() {
+        return &position.x;
+    }
+
+    float*
+    getRotData() {
+        return &rotation.x;
+    }
+
+    float*
+    getScaData() {
+        return &scale.x;
+    }
 
 private:
     sf::Vector2f position; ///< Posición del objeto.

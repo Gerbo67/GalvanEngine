@@ -2,6 +2,7 @@
 
 #include "ShapeFactory.h"
 #include "Transform.h"
+#include "Services\ResourceManager.h"
 #include "Services\NotificationService.h"
 
 BaseApp::~BaseApp() {
@@ -43,7 +44,10 @@ BaseApp::run() {
  */
 bool
 BaseApp::initialize() {
+    // Obtener managers
     NotificationService& notifier = NotificationService::getInstance();
+    ResourceManager& resourceMan = ResourceManager::getInstance();
+    
     m_window = new Window(1920, 1080, "Galvan Engine");
     if (!m_window) {
         ERROR("BaseApp", "initialize", "Error on window creation, var is null");
@@ -56,19 +60,22 @@ BaseApp::initialize() {
         Track->getComponent<ShapeFactory>()->createShape(ShapeType::RECTANGLE);
 
         // Establecer posición, rotación y escala desde Transform
-        Track->getComponent<Transform>()->setPosition(sf::Vector2f(0.0f, 0.0f));
-        Track->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
-        Track->getComponent<Transform>()->setScale(sf::Vector2f(11.0f, 12.0f));
+        Track->getComponent<Transform>()->setTransform(sf::Vector2f(0.0f, 0.0f),
+            sf::Vector2f(0.0f, 0.0f),
+            sf::Vector2f(11.0f, 12.0f));
 
-        // Insertar textura
-        if(!texture.loadFromFile("circuit.png")) {
-            std::cout << "Error de carga de textura" << std::endl;
-            return -1; // Manejar error de carga
+        // Cargar la textura para el actor Track
+        if (!resourceMan.loadTexture("circuit", "png")) {
+            notifier.addMessage(ConsolErrorType::ERROR, "Cant load texture");
         }
-        
-        Track->getComponent<ShapeFactory>()->getShape()->setTexture(&texture);
+
+        // Obtenemos la textura Carga
+        EngineUtilities::TSharedPointer<Texture> trackTexture = resourceMan.getTexture("circuit");
+        if (trackTexture) {
+            Track->getComponent<ShapeFactory>()->getShape()->setTexture(&trackTexture->getTexture());
+        }
+        m_actors.push_back(Track);
     }
-    m_actors.push_back(Track);
 
     // Actor de Círculo
     Circle = EngineUtilities::MakeShared<Actor>("Circle");
@@ -77,19 +84,23 @@ BaseApp::initialize() {
         //Circle->getComponent<ShapeFactory>()->setFillColor(sf::Color::Blue);
 
         // Establecer posición, rotación y escala desde Transform
-        Circle->getComponent<Transform>()->setPosition(sf::Vector2f(200.0f, 200.0f));
-        Circle->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
-        Circle->getComponent<Transform>()->setScale(sf::Vector2f(1.0f, 1.0f));
+        Circle->getComponent<Transform>()->setTransform(sf::Vector2f(200.0f, 200.0f),
+            sf::Vector2f(0.0f, 0.0f),
+            sf::Vector2f(1.0f, 1.0f) );
 
-        // Insertar textura
-        if(!characterTexture.loadFromFile("Characters/tile005.png")) {
-            std::cout << "Error de carga de textura" << std::endl;
-            return -1; // Manejar error de carga
+        // Cargar la textura para el actor Track
+        if (!resourceMan.loadTexture("Characters/tile005", "png")) {
+            notifier.addMessage(ConsolErrorType::ERROR, "Cant load texture");
+        }
+
+        // Obtenemos la textura Carga
+        EngineUtilities::TSharedPointer<Texture> circleTexture = resourceMan.getTexture("Characters/tile005");
+        if (circleTexture) {
+            Circle->getComponent<ShapeFactory>()->getShape()->setTexture(&circleTexture->getTexture());
         }
         
-        Circle->getComponent<ShapeFactory>()->getShape()->setTexture(&characterTexture);
+        m_actors.push_back(Circle);
     }
-    m_actors.push_back(Circle);
 
     return true;
 }
@@ -121,7 +132,9 @@ BaseApp::update() {
  */
 void
 BaseApp::render() {
+    // Obtener Managers
     NotificationService& notifier = NotificationService::getInstance();
+    
     m_window->clear();
 
     // Update the actors
@@ -134,10 +147,11 @@ BaseApp::render() {
     // Mostrar el render en ImGui
     m_window->renderToTexture();  // Finaliza el render a la textura
     m_window->showInImGui();      // Muestra la textura en ImGui
+    m_GUI.barMenu();
     m_GUI.console(notifier.getNotifications());
-    m_GUI.Outliner(m_actors); 
-    m_GUI.PlaceActors(m_actors);  // Mostrar ventana para colocar actores
-    m_GUI.Inspector(m_actors);    // Mostrar ventana del inspector
+    m_GUI.outliner(m_actors); 
+    m_GUI.placeActors(m_actors);  // Mostrar ventana para colocar actores
+    m_GUI.inspector(m_actors);    // Mostrar ventana del inspector
     m_window->render();
     m_window->display();
 }
